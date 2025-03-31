@@ -25,36 +25,17 @@ async function startBot() {
         if (!msg.message || msg.key.fromMe) return;
         const sender = msg.key.remoteJid;
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
-
-        if (text === '.allmenu') {
-            await sock.sendMessage(sender, { text: 'Menu:
-- .allmenu
-- .menu
-- .addowner
-- .delowner
-- .self
-- .hidetag
-- .tagall
-- .kick
-- .add
-- .linkgc
-- .resetlinkgc
-- .antilinkgc
-- .antivirus
-- .antipromosi
-- .totag
-- .antitoxic
-- .freezegc
-- .spamsms
-- .spamotp
-- .tiktok <url>
-- .ytmp3 <url>
-- .ytmp4 <url>
-- .pinterest <url>' });
-        } else if (text === '.menu') {
-            await sock.sendMessage(sender, { text: 'Menu tersedia: Owner Menu, Grup Menu, Bug WA Menu, Download Menu, Game Menu' });
-        }
+        
+        await handleCommand(sock, sender, text);
     });
+}
+
+async function handleCommand(sock, sender, text) {
+    if (text === '.allmenu') {
+        await sock.sendMessage(sender, { text: 'Menu:\n- .allmenu\n- .menu\n- .addowner\n- .delowner\n- .self\n- .hidetag\n- .tagall\n- .kick\n- .add\n- .linkgc\n- .resetlinkgc\n- .antilinkgc\n- .antivirus\n- .antipromosi\n- .totag\n- .antitoxic\n- .freezegc\n- .spamsms\n- .spamotp\n- .tiktok <url>\n- .ytmp3 <url>\n- .ytmp4 <url>\n- .pinterest <url>' });
+    } else if (text === '.menu') {
+        await sock.sendMessage(sender, { text: 'Menu tersedia: Owner Menu, Grup Menu, Bug WA Menu, Download Menu, Game Menu' });
+    }
 }
 
 startBot();
