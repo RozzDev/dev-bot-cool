@@ -7,7 +7,6 @@ async function startBot() {
     const sock = makeWASocket({
         auth: state,
         logger: pino({ level: 'silent' }),
-        printQRInTerminal: true,
     });
 
     sock.ev.on('creds.update', saveCreds);
@@ -17,7 +16,7 @@ async function startBot() {
             const shouldReconnect = (lastDisconnect.error instanceof Boom) && lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut;
             if (shouldReconnect) startBot();
         } else if (connection === 'open') {
-            console.log('Bot Connected!');
+            console.log('Bot Connected as Dev Ganteng!');
         }
     });
 
@@ -27,8 +26,33 @@ async function startBot() {
         const sender = msg.key.remoteJid;
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
 
-        if (text.toLowerCase() === 'ping') {
-            await sock.sendMessage(sender, { text: 'Pong!' });
+        if (text === '.allmenu') {
+            await sock.sendMessage(sender, { text: 'Menu:
+- .allmenu
+- .menu
+- .addowner
+- .delowner
+- .self
+- .hidetag
+- .tagall
+- .kick
+- .add
+- .linkgc
+- .resetlinkgc
+- .antilinkgc
+- .antivirus
+- .antipromosi
+- .totag
+- .antitoxic
+- .freezegc
+- .spamsms
+- .spamotp
+- .tiktok <url>
+- .ytmp3 <url>
+- .ytmp4 <url>
+- .pinterest <url>' });
+        } else if (text === '.menu') {
+            await sock.sendMessage(sender, { text: 'Menu tersedia: Owner Menu, Grup Menu, Bug WA Menu, Download Menu, Game Menu' });
         }
     });
 }
